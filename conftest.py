@@ -49,7 +49,7 @@ def pytest_sessionfinish(session, exitstatus):
     Called after whole test run finished, right before
     returning the exit status to the system.
     """
-    print('***** Session Finished *****')
+    print('\n***** Session Finished *****')
 
 
 def pytest_unconfigure(config):
