@@ -6,7 +6,7 @@ import pytest
 # https://betterprogramming.pub/understand-5-scopes-of-pytest-fixtures-1b607b5c19ed
 
 pytest_plugins = [
-    'fixtures.driver'
+    'fixtures.driver',
 ]
 
 """
@@ -49,7 +49,7 @@ def pytest_sessionfinish(session, exitstatus):
     Called after whole test run finished, right before
     returning the exit status to the system.
     """
-    print('***** Session Finished *****')
+    print('\n***** Session Finished *****')
 
 
 def pytest_unconfigure(config):
