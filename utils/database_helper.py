@@ -17,15 +17,15 @@ def connect_dababase():
         raise error
 
 
-def insert(execution_id, execution_date, test_name, results):
+def insert(execution_id, execution_date, test_name, outcome):
     try:
         conn = connect_dababase()
         cursor = conn.cursor()
         sql = '''
-        insert into results (execution_id, execution_date, test_name, results)
+        insert into results (execution_id, execution_date, test_name, outcome)
         values (%s,%s,%s,%s)
         '''
-        values = (execution_id, execution_date, test_name, results)
+        values = (execution_id, execution_date, test_name, outcome)
 
         cursor.execute(sql, values)
         conn.commit()
