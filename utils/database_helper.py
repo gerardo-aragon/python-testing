@@ -3,6 +3,10 @@ import psycopg2
 
 # connect postgres DB
 def connect_dababase():
+    """
+    Connect the database
+    :return: connection
+    """
     try:
         connect = psycopg2.connect(
             host="localhost",
@@ -17,15 +21,24 @@ def connect_dababase():
         raise error
 
 
-def insert(execution_id, execution_date, test_name, results):
+def insert(execution_id, execution_date, feature, test_name, outcome):
+    """
+    Insert results to the database
+    :param execution_id: test execution id
+    :param execution_date: test execution date
+    :param feature: tested module/feature/section
+    :param test_name: test name
+    :param outcome: result failed or passed
+    :return: error
+    """
     try:
         conn = connect_dababase()
         cursor = conn.cursor()
         sql = '''
-        insert into results (execution_id, execution_date, test_name, results)
-        values (%s,%s,%s,%s)
+        insert into results (execution_id, execution_date, feature, test_name, outcome)
+        values (%s,%s,%s,%s,%s)
         '''
-        values = (execution_id, execution_date, test_name, results)
+        values = (execution_id, execution_date, feature, test_name, outcome)
 
         cursor.execute(sql, values)
         conn.commit()

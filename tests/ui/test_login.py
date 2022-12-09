@@ -11,17 +11,17 @@ from utils.database_helper import insert
 class TestLogin:
 
     def test_login_admin(self):
-        self.driver.get("https://upre-fe-dev.vercel.app/")
+        self.driver.get("http://localhost:4200/login")
 
-        wait = WebDriverWait(self.driver, 30)
+        wait = WebDriverWait(self.driver, 5)
         login_page = LoginPage(self.driver)
-        login_page.login("admin@admin.com", "tempPass_admin@admin.com")
+        login_page.login("gerardoadmin", "Test123@")
         wait.until(EC.visibility_of_element_located((By.ID, "admins-import")))
 
-    def test_invalid_login(self):
-        self.driver.get("https://upre-fe-dev.vercel.app/")
+    def test_invalid_login_admin(self):
+        self.driver.get("http://localhost:4200/login")
 
-        wait = WebDriverWait(self.driver, 30)
+        wait = WebDriverWait(self.driver, 5)
         login_page = LoginPage(self.driver)
-        login_page.login("admin@admin.com", "tempPass_admin@admi.com")
+        login_page.login("gerardoadmin", "Test123")
         wait.until(EC.visibility_of_element_located((By.ID, "toast-container")))
