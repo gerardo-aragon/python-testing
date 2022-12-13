@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from src.pages.login import LoginPage
+from src.pages.login.login import LoginPage
 from utils.database_helper import insert
 
 
