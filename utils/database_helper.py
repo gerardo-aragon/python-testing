@@ -10,7 +10,7 @@ def connect_dababase():
     try:
         connect = psycopg2.connect(
             host="localhost",
-            database="upre",
+            database="upre_automation",
             user="postgres",
             password="admin"
         )
