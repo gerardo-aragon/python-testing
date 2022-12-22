@@ -12,6 +12,7 @@ from pytest_jsonreport.plugin import JSONReport
 
 pytest_plugins = [
     'fixtures.driver',
+    'fixtures.auth'
 ]
 
 """
@@ -84,6 +85,7 @@ def pytest_addoption(parser):
         parser (pytest.config.argparsing.Parser): [description]
     """
     parser.addoption('--env', action='store', help="Execution environment")
+    parser.addoption('--password', action='store', default="Test123@", help="Password auth")
 
 
 

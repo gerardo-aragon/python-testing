@@ -10,7 +10,7 @@ from utils.database_helper import insert
 @pytest.mark.usefixtures("driver_init")
 class TestLogin:
 
-    def test_login_admin(self):
+    def test_success_login_admin(self):
         self.driver.get("http://localhost:4200/login")
 
         wait = WebDriverWait(self.driver, 5)
