@@ -32,6 +32,5 @@ class AdministratorApi:
         }
 
         response = get_request(url=url, status_code=status_code, headers=headers)
-        print(response)
         return response
 
