@@ -15,3 +15,17 @@ def post_request(url, payload, status_code, headers=None, params=None):
     assert response.status_code == status_code
     response_data = json.loads(str(response.text))
     return response_data
+
+
+def put_request(url, payload, status_code, headers=None, params=None):
+    response = requests.put(url, payload, headers=headers, params=params)
+    assert response.status_code == status_code
+    response_data = json.loads(str(response.text))
+    return response_data
+
+
+def delete_request(url, status_code, headers=None, params=None):
+    response = requests.delete(url, headers=headers, params=params)
+    assert response.status_code == status_code
+    response_data = json.loads(str(response.text))
+    return response_data
