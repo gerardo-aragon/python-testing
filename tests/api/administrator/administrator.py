@@ -128,8 +128,8 @@ class TestAdministratorApi:
         admin_id = admin_data['created'][0]['cedulaId']
         
         # Create parametrized fields
-        email = "edited_" + create_random_field() + "@gmail.com"
-        user_name = "edited_" + create_random_field()
+        email = "edited_admin" + create_random_field() + "@gmail.com"
+        user_name = "edited_admin" + create_random_field()
         
         # Edit the admin 
         dictionary = admin.put_edit_administrator(auth, 200, admin_id, email, user_name)
