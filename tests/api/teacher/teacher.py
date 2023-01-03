@@ -144,32 +144,38 @@ class TestTeacherApi:
     def test_08_edit_teacher_existing_email(self, auth):
         teacher = TeacherApi()
 
-        # Create teacher if there are no teachers
-        cedula_id, email, user_name = create_parametrize_data()
-        teacher.post_create_teacher(auth, 201, cedula_id, email, user_name)
+        # Create teacher if there are no admins
+        teacher01_id, teacher01_email, teacher01_user_name = create_parametrize_data()
+        teacher.post_create_teacher(auth, 201, teacher01_id, teacher01_email, teacher01_user_name)
 
-        # Create new teacher data
-        new_user_name = "edited_teacher_" + create_random_field()
+        teacher02_id, teacher02_email, teacher02_user_name = create_parametrize_data()
+        teacher.post_create_teacher(auth, 201, teacher02_id, teacher02_email, teacher02_user_name)
+
+        # Create parametrized fields
+        user_name = "edited_" + create_random_field()
 
         # Edit the teacher
-        dictionary = teacher.put_edit_teacher(auth, 200, cedula_id, email, new_user_name)
-        error_message = dictionary['noCreated'][0]['error']
-        check.equal(error_message, "El usuario ya existe")
+        dictionary = teacher.put_edit_teacher(auth, 400, teacher02_id, teacher01_email, user_name)
+        error_message = dictionary['message']
+        check.equal(error_message, "Bad request: User email already taken")
 
     def test_09_edit_teacher_existing_user_name(self, auth):
         teacher = TeacherApi()
 
-        # Create teacher if there are no teachers
-        cedula_id, email, user_name = create_parametrize_data()
-        teacher.post_create_teacher(auth, 201, cedula_id, email, user_name)
+        # Create teacher if there are no admins
+        teacher01_id, teacher01_email, teacher01_user_name = create_parametrize_data()
+        teacher.post_create_teacher(auth, 201, teacher01_id, teacher01_email, teacher01_user_name)
 
-        # Create new teacher data
-        new_email = "edited_" + create_random_field() + "@gmail.com"
+        teacher02_id, teacher02_email, teacher02_user_name = create_parametrize_data()
+        teacher.post_create_teacher(auth, 201, teacher02_id, teacher02_email, teacher02_user_name)
+
+        # Create parametrized fields
+        email = "edited_" + create_random_field() + "@gmail.com"
 
         # Edit the teacher
-        dictionary = teacher.put_edit_teacher(auth, 200, cedula_id, new_email, user_name)
-        error_message = dictionary['noCreated'][0]['error']
-        check.equal(error_message, "El usuario ya existe")
+        dictionary = teacher.put_edit_teacher(auth, 400, teacher02_id, email, teacher01_user_name)
+        error_message = dictionary['message']
+        check.equal(error_message, "Bad request: User name already taken")
 
     def test_10_delete_teacher_user(self, auth):
         teacher = TeacherApi()
