@@ -59,7 +59,7 @@ class TestAdministratorApi:
         cedula_id, email, user_name = create_parametrize_data()
         admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
 
-        # Create admin with existing cedula_id
+        # Create admin with existing user_name
         new_cedula_id = create_random_field()
         new_email = "user_admin_" + create_random_field() + "@gmail.com"
         response_data = admin.post_create_administrator(auth, 201, new_cedula_id, new_email, user_name)
@@ -146,38 +146,38 @@ class TestAdministratorApi:
         admin = AdministratorApi()
 
         # Create admin if there are no admins
-        cedula_id, email, user_name = create_parametrize_data()
-        admin_data = admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
+        admin01_id, admin01_email, admin01_user_name = create_parametrize_data()
+        admin.post_create_administrator(auth, 201, admin01_id, admin01_email, admin01_user_name)
 
-        # Obtain email to edit the admin
-        existing_email = admin_data['created'][0]['email']
+        admin02_id, admin02_email, admin02_user_name = create_parametrize_data()
+        admin.post_create_administrator(auth, 201, admin02_id, admin02_email, admin02_user_name)
 
         # Create parametrized fields
         user_name = "edited_" + create_random_field()
 
         # Edit the admin
-        dictionary = admin.put_edit_administrator(auth, 200, cedula_id, existing_email, user_name)
-        error_message = dictionary['noCreated'][0]['error']
-        check.equal(error_message, "El usuario ya existe")
+        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, admin01_email, user_name)
+        error_message = dictionary['message']
+        check.equal(error_message, "Bad request: User email already taken")
 
 
     def test_09_edit_admin_existing_user_name(self, auth):
         admin = AdministratorApi()
 
         # Create admin if there are no admins
-        cedula_id, email, user_name = create_parametrize_data()
-        admin_data = admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
+        admin01_id, admin01_email, admin01_user_name = create_parametrize_data()
+        admin.post_create_administrator(auth, 201, admin01_id, admin01_email, admin01_user_name)
 
-        # Obtain userName to edit the admin
-        existing_user_name = admin_data['created'][0]['userName']
+        admin02_id, admin02_email, admin02_user_name = create_parametrize_data()
+        admin.post_create_administrator(auth, 201, admin02_id, admin02_email, admin02_user_name)
 
         # Create parametrized fields
         email = "edited_" + create_random_field() + "@gmail.com"
 
         # Edit the admin
-        dictionary = admin.put_edit_administrator(auth, 200, cedula_id, email, existing_user_name)
-        error_message = dictionary['noCreated'][0]['error']
-        check.equal(error_message, "El usuario ya existe")
+        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, email, admin01_user_name)
+        error_message = dictionary['message']
+        check.equal(error_message, "Bad request: User name already taken")
         
         
     def test_10_delete_admin_user(self, auth):
