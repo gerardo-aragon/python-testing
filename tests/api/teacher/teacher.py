@@ -38,6 +38,9 @@ class TestTeacherApi:
         dictionary = response_data['created'][0]
         check.is_true(is_key_present(dictionary, "cedulaId"))
 
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, cedula_id)
+
     def test_02_create_existing_teacher_id(self, auth):
         teacher = TeacherApi()
 
@@ -51,6 +54,9 @@ class TestTeacherApi:
         response_data = teacher.post_create_teacher(auth, 201, cedula_id, new_email, new_user_name)
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
+
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, cedula_id)
 
 
     def test_03_create_existing_teacher_user(self, auth):
@@ -67,6 +73,10 @@ class TestTeacherApi:
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
 
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, cedula_id)
+        teacher.delete_teacher_user(auth, 200, new_cedula_id)
+
 
     def test_04_create_existing_teacher_email(self, auth):
         teacher = TeacherApi()
@@ -81,6 +91,10 @@ class TestTeacherApi:
         response_data = teacher.post_create_teacher(auth, 201, new_cedula_id, email, new_user_name)
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
+
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, cedula_id)
+        teacher.delete_teacher_user(auth, 200, new_cedula_id)
 
 
     def test_05_get_all_teacher_users(self, auth):
@@ -140,6 +154,9 @@ class TestTeacherApi:
         # Verify if the data was edited correctly
         check.equal(dictionary['email'], new_email)
 
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, cedula_id)
+
 
     def test_08_edit_teacher_existing_email(self, auth):
         teacher = TeacherApi()
@@ -159,6 +176,10 @@ class TestTeacherApi:
         error_message = dictionary['message']
         check.equal(error_message, "Bad request: User email already taken")
 
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, teacher01_id)
+        teacher.delete_teacher_user(auth, 200, teacher02_id)
+
     def test_09_edit_teacher_existing_user_name(self, auth):
         teacher = TeacherApi()
 
@@ -176,6 +197,10 @@ class TestTeacherApi:
         dictionary = teacher.put_edit_teacher(auth, 400, teacher02_id, email, teacher01_user_name)
         error_message = dictionary['message']
         check.equal(error_message, "Bad request: User name already taken")
+
+        # Delete the teacher to avoid unnecessary data
+        teacher.delete_teacher_user(auth, 200, teacher01_id)
+        teacher.delete_teacher_user(auth, 200, teacher02_id)
 
     def test_10_delete_teacher_user(self, auth):
         teacher = TeacherApi()
