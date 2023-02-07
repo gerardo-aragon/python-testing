@@ -74,3 +74,19 @@ class StudentApi:
         response = get_request(url=url, status_code=status_code, headers=headers)
         return response
 
+
+    @staticmethod
+    def get_students_by_group(auth, status_code, group_name):
+        url = f"http://localhost/api/v1/students?page=1&search={group_name}"
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + auth
+        }
+
+        response = get_request(url=url, status_code=status_code, headers=headers)
+        return response
+
+
+
+
