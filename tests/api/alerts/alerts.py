@@ -89,13 +89,7 @@ class TestAlertsApi:
         alerts.post_create_notes(auth, 201, student_id, user_id, "Note 0001")
 
         # Get notes by student
-        notes_data = alerts.get_student_alert_notes_pdf(auth, 200, student_id)
-        print (str(notes_data))
-
-        # Validate the data in the response
-        #check.equal(notes_data[0]["message"], "Note 0001")
-        #check.is_true(is_key_present(notes_data[0], "userName"))
-        #check.is_true(is_key_present(notes_data[0], "userLastName"))
+        alerts.get_student_alert_notes_pdf(auth, 200, student_id)
 
 
 
