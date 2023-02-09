@@ -152,7 +152,7 @@ class TestAlertsApi:
         schedule.delete_schedule(auth, 200, schedule_id)
 
 
-    def test_get_students_faults(self, auth):
+    def test_07_get_students_faults(self, auth):
         faults = FaultsApi()
         schedule = ScheduleApi()
 
