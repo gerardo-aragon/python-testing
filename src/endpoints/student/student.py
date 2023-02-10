@@ -88,5 +88,18 @@ class StudentApi:
         return response
 
 
+    @staticmethod
+    def get_student_report(auth, status_code, student_id):
+        url = f"http://localhost/api/v1/students/{student_id}/report"
+
+        headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + auth
+        }
+
+        response = get_request(url=url, status_code=status_code, headers=headers)
+        return response
+
+
 
 

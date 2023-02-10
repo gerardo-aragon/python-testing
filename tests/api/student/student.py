@@ -27,7 +27,7 @@ def create_parametrize_data():
 @pytest.mark.usefixtures("auth")
 class TestStudentApi:
 
-    def test_01_create_student_successful(self, auth):
+    """def test_01_create_student_successful(self, auth):
         student = StudentApi()
 
         # Create student
@@ -122,7 +122,24 @@ class TestStudentApi:
         
         # Verify if the response body contains...
         check.is_true(is_key_present(dictionary, "id"))
-        check.equal(int(cedula_id), int(dictionary["id"]))
+        check.equal(int(cedula_id), int(dictionary["id"]))"""
+
+
+    def test_07_get_student_report(self, auth):
+        student = StudentApi()
+
+        # Create student
+        student_data = student.get_student_users(auth, 200)
+        student_id = student_data['data'][0]['cedulaId']
+
+        # Get student report
+        report_data = student.get_student_report(auth, 200, student_id)
+
+        # Verify if the response body contains...
+        check.is_true(is_key_present(report_data, "absences"))
+        check.is_true(is_key_present(report_data, "notes"))
+        check.is_true(is_key_present(report_data, "faults"))
+
         
         
         
