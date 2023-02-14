@@ -8,18 +8,7 @@ from src.endpoints.users.users import *
 from utils.asserts import *
 from pytest_check import check
 from utils.payloads.create_administrator import *
-
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
-    user_name = epoch
-    return user_name
-
-def create_parametrize_data():
-    cedula_id = create_random_field()
-    email = "user_admin_" + create_random_field() + "@gmail.com"
-    user_name = "user_admin_" + create_random_field()
-    return cedula_id, email, user_name
+from utils.preconditions import *
 
 @pytest.mark.usefixtures("auth")
 class TestAdministratorApi:
@@ -30,7 +19,8 @@ class TestAdministratorApi:
         
         # Create admin
         cedula_id, email, user_name = create_parametrize_data()
-        response_data = admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
+        response_data = admin.post_create_administrator(auth, 201, cedula_id, "user_admin_"+email,
+                                                        "user_admin_"+user_name)
         
         # verify if cedulaId is present
         dictionary = response_data['created'][0]
@@ -45,11 +35,11 @@ class TestAdministratorApi:
 
         # Create admin
         cedula_id, email, user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
+        admin.post_create_administrator(auth, 201, cedula_id, "user_admin_"+email, "user_admin_"+user_name)
         
         # Create admin with existing cedula_id
-        new_email = "user_admin_" + create_random_field() + "@gmail.com"
-        new_user_name = "user_admin_" + create_random_field()
+        new_email = "user_admin_" + create_random_fields() + "@gmail.com"
+        new_user_name = "user_admin_" + create_random_fields()
         response_data = admin.post_create_administrator(auth, 201, cedula_id, new_email, new_user_name)
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
@@ -66,8 +56,8 @@ class TestAdministratorApi:
         admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
 
         # Create admin with existing user_name
-        new_cedula_id = create_random_field()
-        new_email = "user_admin_" + create_random_field() + "@gmail.com"
+        new_cedula_id = create_random_fields()
+        new_email = "user_admin_" + create_random_fields() + "@gmail.com"
         response_data = admin.post_create_administrator(auth, 201, new_cedula_id, new_email, user_name)
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
@@ -86,8 +76,8 @@ class TestAdministratorApi:
         admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
 
         # Create admin with existing cedula_id
-        new_cedula_id = create_random_field()
-        new_user_name = "user_admin_" + create_random_field()
+        new_cedula_id = create_random_fields()
+        new_user_name = "user_admin_" + create_random_fields()
         response_data = admin.post_create_administrator(auth, 201, new_cedula_id, email, new_user_name)
         error_message = response_data['noCreated'][0]['error']
         check.equal(error_message, "El usuario ya existe")
@@ -136,14 +126,15 @@ class TestAdministratorApi:
         
         # Create admin if there are no admins
         cedula_id, email, user_name = create_parametrize_data()
-        admin_data = admin.post_create_administrator(auth, 201, cedula_id, email, user_name)
+        admin_data = admin.post_create_administrator(auth, 201, cedula_id, "user_admin_"+email,
+                                                     "user_admin_"+user_name)
         
         # Obtain cedulaId to edit the admin
         admin_id = admin_data['created'][0]['cedulaId']
         
         # Create parametrized fields
-        email = "edited_admin" + create_random_field() + "@gmail.com"
-        user_name = "edited_admin" + create_random_field()
+        email = "edited_admin" + create_random_fields() + "@gmail.com"
+        user_name = "edited_admin" + create_random_fields()
         
         # Edit the admin 
         dictionary = admin.put_edit_administrator(auth, 200, admin_id, email, user_name)
@@ -164,16 +155,18 @@ class TestAdministratorApi:
 
         # Create admin if there are no admins
         admin01_id, admin01_email, admin01_user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, admin01_id, admin01_email, admin01_user_name)
+        admin.post_create_administrator(auth, 201, admin01_id, "user_admin_"+admin01_email,
+                                        "user_admin_"+admin01_user_name)
 
         admin02_id, admin02_email, admin02_user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, admin02_id, admin02_email, admin02_user_name)
+        admin.post_create_administrator(auth, 201, admin02_id, "user_admin_"+admin02_email,
+                                        "user_admin_"+admin02_user_name)
 
         # Create parametrized fields
-        user_name = "edited_" + create_random_field()
+        user_name = "edited_user_admin" + create_random_fields()
 
         # Edit the admin
-        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, admin01_email, user_name)
+        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, "user_admin_"+admin01_email, user_name)
         error_message = dictionary['message']
         check.equal(error_message, "Bad request: User email already taken")
 
@@ -187,16 +180,18 @@ class TestAdministratorApi:
 
         # Create admin if there are no admins
         admin01_id, admin01_email, admin01_user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, admin01_id, admin01_email, admin01_user_name)
+        admin.post_create_administrator(auth, 201, admin01_id, "user_admin_"+admin01_email, 
+                                        "user_admin_"+admin01_user_name)
 
         admin02_id, admin02_email, admin02_user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, admin02_id, admin02_email, admin02_user_name)
+        admin.post_create_administrator(auth, 201, admin02_id, "user_admin_"+admin02_email, 
+                                        "user_admin_"+admin02_user_name)
 
         # Create parametrized fields
-        email = "edited_" + create_random_field() + "@gmail.com"
+        email = "edited_user_admin" + create_random_fields() + "@gmail.com"
 
         # Edit the admin
-        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, email, admin01_user_name)
+        dictionary = admin.put_edit_administrator(auth, 400, admin02_id, email, "user_admin_"+admin01_user_name)
         error_message = dictionary['message']
         check.equal(error_message, "Bad request: User name already taken")
 

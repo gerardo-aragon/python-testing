@@ -4,42 +4,9 @@ import time
 from utils.api_helper import *
 from src.endpoints.auth.auth import *
 from src.endpoints.alerts.alerts import *
-from src.endpoints.faults.faults import *
-from src.endpoints.groups.groups import *
-from src.endpoints.schedule.schedule import *
-from src.endpoints.student.student import *
 from utils.asserts import *
 from pytest_check import check
-
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
-    schedule_name = epoch
-    return schedule_name[-5:]
-
-def create_parametrize_data():
-    schedule_name = "Horario " + create_random_field()
-    return schedule_name
-
-def create_fault(auth):
-    schedule = ScheduleApi()
-    faults = FaultsApi()
-    group = GroupsApi()
-    student = StudentApi()
-
-    # Search an existent group (Created previously by database)
-    search_group = group.get_search_group(auth, 200, "7-1 (No eliminar)")
-    group_id = search_group["data"][0]["id"]
-
-    # Create schedule
-    schedule_name = create_parametrize_data()
-    dictionary = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
-
-    # Get student
-    student_id = student.get_students_by_group(auth, 200, "7-1 (No eliminar)")
-    response_body = \
-        faults.post_create_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Tardy", dictionary["id"])
-    return response_body
+from utils.preconditions import *
     
 
 @pytest.mark.usefixtures("auth")
