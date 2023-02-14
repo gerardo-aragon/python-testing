@@ -7,6 +7,7 @@ from src.endpoints.faults.faults import *
 from src.endpoints.groups.groups import *
 from src.endpoints.schedule.schedule import *
 from src.endpoints.student.student import *
+from src.endpoints.attendance.attendance import *
 
 def create_random_fields():
     time.sleep(1)
@@ -40,3 +41,28 @@ def create_fault(auth):
     response_body = \
         faults.post_create_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Tardy", dictionary["id"])
     return response_body
+
+
+def create_schedule_for_attendance_data(auth):
+    schedule = ScheduleApi()
+    group = GroupsApi()
+    student = StudentApi()
+    attendance = AttendanceApi()
+
+    # Get student in the group
+    student_data = student.get_students_by_group(auth, 200, "7-1 (No eliminar)")
+    student_id = student_data['data'][0]['cedulaId']
+
+    # Get teacher and schedules in the group
+    search_group = group.get_search_group(auth, 200, "7-1 (No eliminar)")
+    group_id = search_group["data"][0]["id"]
+    teacher_id = search_group['data'][0]['managerId']
+    schedules_data = schedule.get_all_schedule_by_group_id(auth, 200, group_id)
+    schedule_id = schedules_data[0]['id']
+
+    # Get attendance data
+    attendance_data = attendance.get_attendance_data(auth, 200, student_id, teacher_id, schedule_id)
+    start_time = attendance_data[0]['start']
+    end_time = attendance_data[0]['end']
+
+    return schedule_id, teacher_id, group_id, student_id, start_time, end_time
