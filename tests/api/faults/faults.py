@@ -1,48 +1,13 @@
 import json
 import time
-from datetime import datetime
 
 from utils.api_helper import *
 from src.endpoints.auth.auth import *
-from src.endpoints.alerts.alerts import *
 from src.endpoints.faults.faults import *
-from src.endpoints.groups.groups import *
 from src.endpoints.schedule.schedule import *
-from src.endpoints.student.student import *
-from utils.payloads.create_fault import *
 from utils.asserts import *
 from pytest_check import check
-
-
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.today().strftime('%s')
-    schedule_name = epoch
-    return schedule_name[-5:]
-
-
-def create_parametrize_data():
-    schedule_name = "Horario " + create_random_field()
-    return schedule_name
-
-
-def create_preconditions(auth):
-    schedule = ScheduleApi()
-    group = GroupsApi()
-    student = StudentApi()
-
-    # Search an existent group (Created previously by database)
-    search_group = group.get_search_group(auth, 200, "7-1 (No eliminar)")
-    group_id = search_group["data"][0]["id"]
-
-    # Create schedule
-    schedule_name = create_parametrize_data()
-    schedule_data = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
-    schedule_id = schedule_data["id"]
-
-    # Get student
-    student_data = student.get_students_by_group(auth, 200, "7-1 (No eliminar)")
-    return group_id, schedule_id, student_data
+from utils.preconditions import *
 
 
 @pytest.mark.usefixtures("auth")
@@ -52,7 +17,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Tardy", schedule_id)
@@ -70,7 +35,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][1]['cedulaId'], "Absence", schedule_id)
@@ -88,7 +53,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][2]['cedulaId'], "Tardy", schedule_id)
@@ -106,7 +71,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][3]['cedulaId'], "Absence", schedule_id)
@@ -132,7 +97,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][1]['cedulaId'],
@@ -156,7 +121,7 @@ class TestAlertsApi:
         faults = FaultsApi()
         schedule = ScheduleApi()
 
-        group_id, schedule_id, student_id = create_preconditions(auth)
+        group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
         faults.post_create_student_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Absence",

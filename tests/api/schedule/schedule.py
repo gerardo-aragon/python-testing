@@ -8,17 +8,8 @@ from utils.asserts import *
 from pytest_check import check
 from utils.payloads.create_schedule import *
 from src.endpoints.groups.groups import *
+from utils.preconditions import *
 
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
-    schedule_name = epoch
-    return schedule_name[-5:]
-
-
-def create_parametrize_data():
-    schedule_name = "Horario " + create_random_field()
-    return schedule_name
 
 @pytest.mark.usefixtures("auth")
 class TestScheduleApi:
@@ -32,7 +23,7 @@ class TestScheduleApi:
         group_id = search_group["data"][0]["id"]
 
         # Create schedule
-        schedule_name = create_parametrize_data()
+        schedule_name = "Horario " + (create_random_fields()[-5:])
         dictionary = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = dictionary["id"]
 
@@ -54,7 +45,7 @@ class TestScheduleApi:
         group_id = search_group["data"][0]["id"]
 
         # Create a group if there are no groups
-        schedule_name = create_parametrize_data()
+        schedule_name = "Horario " + (create_random_fields()[-5:])
         new_schedule = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = new_schedule["id"]
 
@@ -79,7 +70,7 @@ class TestScheduleApi:
         group_id = search_group["data"][0]["id"]
 
         # Create a group if there are no groups
-        schedule_name = create_parametrize_data()
+        schedule_name = "Horario " + (create_random_fields()[-5:])
         new_schedule = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = new_schedule["id"]
 
@@ -104,12 +95,12 @@ class TestScheduleApi:
         group_id = search_group["data"][0]["id"]
 
         # Create a group if there are no groups
-        schedule_name = create_parametrize_data()
+        schedule_name = "Horario " + (create_random_fields()[-5:])
         new_schedule = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = new_schedule["id"]
 
         # Get schedules by group id
-        new_schedule_name = "edited_" + create_parametrize_data()
+        new_schedule_name = "edited_" + "Horario " + (create_random_fields()[-5:])
         dictionary = schedule.put_edit_schedule(auth, 200, schedule_id, group_id, new_schedule_name)
 
         # verify if id is present
@@ -130,7 +121,7 @@ class TestScheduleApi:
         group_id = search_group["data"][0]["id"]
 
         # Create a group if there are no groups
-        schedule_name = create_parametrize_data()
+        schedule_name = "Horario " + (create_random_fields()[-5:])
         new_schedule = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = new_schedule["id"]
 
