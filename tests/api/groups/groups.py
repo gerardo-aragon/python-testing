@@ -7,17 +7,8 @@ from src.endpoints.groups.groups import *
 from utils.asserts import *
 from pytest_check import check
 from utils.payloads.create_groups import *
+from utils.preconditions import *
 
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
-    group_name = epoch
-    return group_name[-5:]
-
-
-def create_parametrize_data():
-    group_name = "sección " + create_random_field()
-    return group_name
 
 @pytest.mark.usefixtures("auth")
 class TestGroupApi:
@@ -26,7 +17,7 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group
-        group_name = create_parametrize_data()
+        group_name = "Sección " + (create_random_fields()[-5:])
         response_data = group.post_create_groups(auth, 201, group_name)
 
         # verify if id is present
@@ -41,7 +32,7 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group
-        group_name = create_parametrize_data()
+        group_name = "Sección " + (create_random_fields()[-5:])
         group.post_create_groups(auth, 201, group_name)
 
         # Create group with existing name
@@ -57,7 +48,7 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group if there are no groups
-        group_name = create_parametrize_data()
+        group_name = "Sección " + (create_random_fields()[-5:])
         response = group.post_create_groups(auth, 201, group_name)
 
         # Get all groups
@@ -136,7 +127,7 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group if there are no groups
-        group_name = create_parametrize_data()
+        group_name = group_name = "Sección " + (create_random_fields()[-5:])
         response_data = group.post_create_groups(auth, 201, group_name)
         group_id = response_data["created"][0]["id"]
 
@@ -156,12 +147,12 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group if there are no groups
-        group_name = create_parametrize_data()
+        group_name = "Sección " + (create_random_fields()[-5:])
         response_data = group.post_create_groups(auth, 201, group_name)
         group_id = response_data["created"][0]["id"]
 
         # Edit group
-        new_group_name = "edited_" + create_parametrize_data()
+        new_group_name = "edited_" + (create_random_fields()[-5:])
         group_data = group.put_edit_group(auth, 200, group_id, new_group_name)
 
         # Validate if the response has .....
@@ -177,7 +168,7 @@ class TestGroupApi:
         group = GroupsApi()
 
         # Create group if there are no groups
-        group_name = create_parametrize_data()
+        group_name = "Sección " + (create_random_fields()[-5:])
         response_data = group.post_create_groups(auth, 201, group_name)
         group_id = response_data["created"][0]["id"]
 
