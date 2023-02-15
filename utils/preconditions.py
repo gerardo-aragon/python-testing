@@ -1,5 +1,4 @@
 import json
-import datetime
 import time
 
 from src.endpoints.alerts.alerts import *
@@ -8,10 +7,11 @@ from src.endpoints.groups.groups import *
 from src.endpoints.schedule.schedule import *
 from src.endpoints.student.student import *
 from src.endpoints.attendance.attendance import *
+from datetime import datetime
 
 def create_random_fields():
     time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
+    epoch = datetime.today().strftime('%s')
     field_name = epoch
     return field_name
 
@@ -66,3 +66,22 @@ def create_schedule_for_attendance_data(auth):
     end_time = attendance_data[0]['end']
 
     return schedule_id, teacher_id, group_id, student_id, start_time, end_time
+
+
+def get_student_data(auth):
+    schedule = ScheduleApi()
+    group = GroupsApi()
+    student = StudentApi()
+
+    # Search an existent group (Created previously by database)
+    search_group = group.get_search_group(auth, 200, "7-1 (No eliminar)")
+    group_id = search_group["data"][0]["id"]
+
+    # Create schedule
+    schedule_name = "Horario " + (create_random_fields()[-5:])
+    schedule_data = schedule.post_create_schedule(auth, 201, schedule_name, group_id)
+    schedule_id = schedule_data["id"]
+
+    # Get student
+    student_data = student.get_students_by_group(auth, 200, "7-1 (No eliminar)")
+    return group_id, schedule_id, student_data
