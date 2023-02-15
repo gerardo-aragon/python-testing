@@ -8,20 +8,7 @@ from src.endpoints.users.users import *
 from utils.asserts import *
 from pytest_check import check
 from utils.payloads.create_student import *
-
-
-def create_random_field():
-    time.sleep(1)
-    epoch = datetime.datetime.today().strftime('%s')
-    user_name = epoch
-    return user_name
-
-
-def create_parametrize_data():
-    cedula_id = create_random_field()
-    email = "user_student_" + create_random_field() + "@gmail.com"
-    user_name = "user_student_" + create_random_field()
-    return cedula_id, email, user_name
+from utils.preconditions import *
 
 
 @pytest.mark.usefixtures("auth")
@@ -31,7 +18,7 @@ class TestStudentApi:
         student = StudentApi()
 
         # Create student
-        cedula_id, email, user_name = create_parametrize_data()
+        cedula_id = create_random_fields()
         response_data = student.post_create_student(auth, 201, cedula_id)
 
         # verify if id is present
@@ -46,7 +33,7 @@ class TestStudentApi:
         student = StudentApi()
 
         # Create student
-        cedula_id, email, user_name = create_parametrize_data()
+        cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
         
         # Create student with existing cedula_id
@@ -75,7 +62,7 @@ class TestStudentApi:
         student = StudentApi()
 
         # Create student
-        cedula_id, email, user_name = create_parametrize_data()
+        cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
         
         # Get specific student
@@ -94,7 +81,7 @@ class TestStudentApi:
         student = StudentApi()
 
         # Create student
-        cedula_id, email, user_name = create_parametrize_data()
+        cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
         
         # Edit student
@@ -114,7 +101,7 @@ class TestStudentApi:
         student = StudentApi()
 
         # Create student
-        cedula_id, email, user_name = create_parametrize_data()
+        cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
 
         # Delete student
