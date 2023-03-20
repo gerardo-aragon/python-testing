@@ -25,13 +25,6 @@ class CreateAdministrator(PageFactory):
         'password_field': ('XPATH', "//input[contains(@ng-reflect-name, 'password')]"),
         'confirm_password_field': ('XPATH', "//input[contains(@ng-reflect-name, 'confirmationPassword')]"),
         'create_admin_button': ('ID', "submit-btn"),
-        'cancel_admin_button': ('ID', "cancel-btn"),
-        'confirm_message_toast': ('XPATH', "//div[contains(@class, 'toast-message')]"),
-        'edit_admin_icon': ('ID', "edit-btn"),
-        'delete_admin_icon': ('ID', "delete-btn"),
-        'update_admin_button': ('XPATH', "//span[contains(text(),' Actualizar Administrador ')]"),
-        'search_field': ('ID', "searchInput"),
-        'delete_button': ('ID', "deleteButton")
     }
 
     @staticmethod
@@ -54,25 +47,3 @@ class CreateAdministrator(PageFactory):
         self.fill_admin_field(self.password_field, password)
         self.fill_admin_field(self.confirm_password_field, password)
         self.create_admin_button_click()
-        
-    def edit_admin_icon_click(self):
-        self.edit_admin_icon.click()
-        
-    def edit_admin_button_click(self):
-        self.update_admin_button.click()
-
-    def search_admin(self, name):
-        self.fill_admin_field(self.search_field, name)
-
-    def edit_user_admin(self, name, last_name, phone):
-
-        self.fill_admin_field(self.name_field, name)
-        self.fill_admin_field(self.last_name_field, last_name)
-        self.fill_admin_field(self.phone_field, phone)
-        self.edit_admin_button_click()
-    
-    def delete_admin_icon_click(self):
-        self.delete_admin_icon.click()
-        
-    def delete_admin_button_click(self):
-        self.delete_button.click()
