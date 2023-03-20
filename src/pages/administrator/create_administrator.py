@@ -2,6 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from seleniumpagefactory.Pagefactory import PageFactory
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from utils.preconditions import *
 import datetime
 import time
 
@@ -24,8 +25,6 @@ class CreateAdministrator(PageFactory):
         'password_field': ('XPATH', "//input[contains(@ng-reflect-name, 'password')]"),
         'confirm_password_field': ('XPATH', "//input[contains(@ng-reflect-name, 'confirmationPassword')]"),
         'create_admin_button': ('ID', "submit-btn"),
-        'cancel_admin_button': ('ID', "cancel-btn"),
-        'confirm_message_toast': ('XPATH', "//div[contains(@class, 'toast-message')]")
     }
 
     @staticmethod
@@ -35,16 +34,8 @@ class CreateAdministrator(PageFactory):
     def create_admin_button_click(self):
         self.create_admin_button.click()
 
-    @staticmethod
-    def create_random_field():
-        epoch = datetime.datetime.today().strftime('%s')
-        user_name = epoch
-        return user_name
-
-
-    def create_user_admin(self, name, last_name, birth_date, phone, user_name, password):
-        id_field = str(self.create_random_field())
-        email_address = str("user_admin_" + self.create_random_field() + "@gmail.com")
+    def create_user_admin(self, id_field, name, last_name, birth_date, phone, user_name, password):
+        email_address = str("user_admin_" + create_random_fields() + "@gmail.com")
 
         self.fill_admin_field(self.id_field, id_field)
         self.fill_admin_field(self.name_field, name)
@@ -56,7 +47,3 @@ class CreateAdministrator(PageFactory):
         self.fill_admin_field(self.password_field, password)
         self.fill_admin_field(self.confirm_password_field, password)
         self.create_admin_button_click()
-
-
-
-
