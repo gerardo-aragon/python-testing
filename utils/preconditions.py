@@ -12,7 +12,7 @@ from datetime import datetime
 def create_random_fields():
     time.sleep(1)
     epoch = datetime.today().strftime('%s')
-    field_name = epoch
+    field_name = (epoch[-9:])
     return field_name
 
 def create_parametrize_data():
