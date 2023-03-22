@@ -4,7 +4,7 @@ import time
 def set_create_teacher_payload(cedula_id, email, user_name):
     payload_create_teacher = [{
         "cedulaId": int(cedula_id),
-        "firstName": "Teacher",
+        "firstName": "Teacher Automated",
         "lastName": "Upre",
         "birthdate": "09/11/1992",
         "phone": 60606060,
@@ -25,4 +25,3 @@ def set_edit_teacher_payload(email, user_name):
         "password": "Edited123@"
     }
     return payload_edit_teacher
-
