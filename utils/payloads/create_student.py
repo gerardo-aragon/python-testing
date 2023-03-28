@@ -4,7 +4,7 @@ import time
 def set_create_student_payload(cedula_id):
     payload_create_student = [{
         "id": int(cedula_id),
-        "firstName": "Student",
+        "firstName": "Student Automated",
         "lastName": "Upre",
         "birthdate": "09/11/1992",
         "tutor": "Tutor",
@@ -26,4 +26,3 @@ def set_edit_student_payload(cedula_id):
         "group": "7-1 (No eliminar)"
     }
     return payload_edit_student
-
