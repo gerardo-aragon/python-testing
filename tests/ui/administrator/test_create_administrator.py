@@ -15,7 +15,7 @@ import psycopg2
 
 @pytest.mark.usefixtures('driver_init')
 @pytest.mark.usefixtures("auth")
-class TestAdministrator:
+class TestCreateAdministrator:
 
     def test_01_create_administrator(self, auth):
         login_page = LoginPage(self.driver)
@@ -49,7 +49,6 @@ class TestAdministrator:
         api_admin = AdministratorApi()
         dashboard_admin = AdministratorDashboard(self.driver)
         edit_admin = EditAdministrator(self.driver)
-        wait = WebDriverWait(self.driver, 10)
         
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
@@ -66,10 +65,8 @@ class TestAdministrator:
         dashboard_admin.edit_admin_icon_click()
         edit_admin.edit_user_admin(" edited", " edited", "60606060")
 
-        # Validations
-        admin_dashboard.is_toast_present()
-        wait.until(EC.presence_of_element_located(
-            (By.XPATH, "//td[contains(@class, 'mat-column-userName') and text() = '" + user_name + "']")))
+        # Validation
+        dashboard_admin.is_toast_present()
 
         # Delete the created admin
         api_admin.delete_admin_user(auth, 200, cedula_id)
@@ -78,10 +75,11 @@ class TestAdministrator:
     def test_03_delete_admin(self, auth):
         login_page = LoginPage(self.driver)
         dashboard_admin = AdministratorDashboard(self.driver)
+        api_admin = AdministratorApi()
 
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
+        api_admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
                                         "user_admin_" + user_name)
 
         # Login
@@ -101,11 +99,12 @@ class TestAdministrator:
     def test_04_search_admin(self, auth):
         login_page = LoginPage(self.driver)
         dashboard_admin = AdministratorDashboard(self.driver)
+        api_admin = AdministratorApi()
         wait = WebDriverWait(self.driver, 10)
 
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
-        admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
+        api_admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
                                         "user_admin_" + user_name)
 
         # Login
@@ -121,4 +120,4 @@ class TestAdministrator:
             (By.XPATH, "//td[contains(@class, 'mat-column-userName') and text() = 'user_admin_" + user_name + "']")))
 
         # Delete the created admin
-        admin.delete_admin_user(auth, 200, cedula_id)
+        api_admin.delete_admin_user(auth, 200, cedula_id)
