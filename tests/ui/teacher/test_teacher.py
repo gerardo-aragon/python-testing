@@ -64,6 +64,7 @@ class TestCreateTeacher:
         menu.click_teacher_link()
 
         teacher_dashboard.search_teacher("Teacher Automated")
+        time.sleep(2)
         wait.until(EC.presence_of_element_located(
             (By.XPATH, "(//td[contains(@class, 'cdk-column-firstName') and text() = 'Teacher Automated'])[1]")))
         teacher_dashboard.edit_teacher_icon_click()
@@ -91,6 +92,7 @@ class TestCreateTeacher:
         menu.click_teacher_link()
 
         teacher_dashboard.search_teacher("Teacher Automated")
+        time.sleep(2)
         wait.until(EC.presence_of_element_located(
             (By.XPATH, "(//td[contains(@class, 'cdk-column-firstName') and text() = 'Teacher Automated'])[1]")))
         teacher_dashboard.delete_teacher_icon_click()
@@ -116,6 +118,7 @@ class TestCreateTeacher:
         menu.click_teacher_link()
 
         teacher_dashboard.search_teacher("Teacher Automated")
+        time.sleep(2)
         wait.until(EC.presence_of_element_located(
             (By.XPATH, "(//td[contains(@class, 'cdk-column-firstName') and text() = 'Teacher Automated'])[1]")))
 
