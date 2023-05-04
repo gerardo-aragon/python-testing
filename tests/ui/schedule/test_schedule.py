@@ -88,7 +88,6 @@ class TestCreateSchedule:
 
         login_page = LoginPage(self.driver)
         schedule_dashboard = ScheduleDashboard(self.driver)
-        edit_schedule = EditSchedule(self.driver)
         menu = Menu(self.driver)
         schedule_api = ScheduleApi()
         group_api = GroupsApi()
@@ -100,7 +99,6 @@ class TestCreateSchedule:
         # Create schedule
         schedule_name = "Horario_" + (create_random_fields()[-5:])
         dictionary = schedule_api.post_create_schedule(auth, 201, schedule_name, group_id)
-        schedule_id = dictionary["id"]
 
         #Login
         login_page.login("gerardo.aragon", "Test123@")
