@@ -113,10 +113,3 @@ class TestCreateSchedule:
 
         # Validate if toast is present
         schedule_dashboard.is_toast_present()
-
-
-        
-        
-
-
-        
