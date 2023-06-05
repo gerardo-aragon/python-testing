@@ -2,6 +2,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from seleniumpagefactory.Pagefactory import PageFactory
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+import time
 
 class Menu(PageFactory):
 
@@ -38,8 +39,9 @@ class Menu(PageFactory):
     def click_subject_link(self):
         self.subject_link.click()
 
-    def click_suction_link(self):
+    def click_section_link(self):
         self.section_link.click()
+        time.sleep(2)
 
     def click_logout_link(self):
         self.logout_link.click()
