@@ -25,6 +25,7 @@ class Menu(PageFactory):
         self.administrator_link.click()
 
     def click_alerts_link(self):
+        time.sleep(2)
         self.alerts_link.click()
         
     def click_teacher_link(self):
