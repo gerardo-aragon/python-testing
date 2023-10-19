@@ -13,6 +13,7 @@ from utils.preconditions import *
 import pytest
 import psycopg2
 
+
 @pytest.mark.usefixtures('driver_init')
 @pytest.mark.usefixtures("auth")
 class TestAdministrator:
@@ -33,7 +34,7 @@ class TestAdministrator:
         user_id = create_random_fields()
         user_name = str("user_admin_" + user_id)
         create_admin.create_user_admin(user_id, "Gerardo", "Aragón Madrigal", "09/11/1992", "60606060",
-                                               user_name, "Test123@")
+                                       user_name, "Test123@")
 
         # Validations
         dashboard_admin.is_toast_present()
@@ -43,18 +44,17 @@ class TestAdministrator:
         # Delete the created admin
         api_admin.delete_admin_user(auth, 200, user_id)
 
-
     def test_02_edit_admin(self, auth):
         login_page = LoginPage(self.driver)
         api_admin = AdministratorApi()
         dashboard_admin = AdministratorDashboard(self.driver)
         edit_admin = EditAdministrator(self.driver)
         wait = WebDriverWait(self.driver, 10)
-        
+
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
         api_admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
-                                                        "user_admin_" + user_name)
+                                            "user_admin_" + user_name)
 
         # Login
         self.driver.get("http://localhost:4200/login")
@@ -73,8 +73,7 @@ class TestAdministrator:
 
         # Delete the created admin
         api_admin.delete_admin_user(auth, 200, cedula_id)
-        
-        
+
     def test_03_delete_admin(self, auth):
         login_page = LoginPage(self.driver)
         dashboard_admin = AdministratorDashboard(self.driver)
@@ -83,7 +82,7 @@ class TestAdministrator:
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
         api_admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
-                                        "user_admin_" + user_name)
+                                            "user_admin_" + user_name)
 
         # Login
         self.driver.get("http://localhost:4200/login")
@@ -98,7 +97,6 @@ class TestAdministrator:
         # Validation
         dashboard_admin.is_toast_present()
 
-
     def test_04_search_admin(self, auth):
         login_page = LoginPage(self.driver)
         dashboard_admin = AdministratorDashboard(self.driver)
@@ -108,7 +106,7 @@ class TestAdministrator:
         # Create admin by API
         cedula_id, email, user_name = create_parametrize_data()
         api_admin.post_create_administrator(auth, 201, cedula_id, "user_admin_" + email,
-                                        "user_admin_" + user_name)
+                                            "user_admin_" + user_name)
 
         # Login
         self.driver.get("http://localhost:4200/login")

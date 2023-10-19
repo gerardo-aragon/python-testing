@@ -9,11 +9,13 @@ from src.endpoints.student.student import *
 from src.endpoints.attendance.attendance import *
 from datetime import datetime
 
+
 def create_random_fields():
     time.sleep(1)
     epoch = datetime.today().strftime('%s')
     field_name = (epoch[-9:])
     return field_name
+
 
 def create_parametrize_data():
     cedula_id = create_random_fields()

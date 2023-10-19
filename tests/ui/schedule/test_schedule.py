@@ -66,7 +66,7 @@ class TestCreateSchedule:
         dictionary = schedule_api.post_create_schedule(auth, 201, schedule_name, group_id)
         schedule_id = dictionary["id"]
 
-        #Login
+        # Login
         login_page.login("gerardo.aragon", "Test123@")
 
         # Access schedule section
@@ -100,7 +100,7 @@ class TestCreateSchedule:
         schedule_name = "Horario_" + (create_random_fields()[-5:])
         dictionary = schedule_api.post_create_schedule(auth, 201, schedule_name, group_id)
 
-        #Login
+        # Login
         login_page.login("gerardo.aragon", "Test123@")
 
         # Access schedule section

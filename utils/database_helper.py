@@ -46,6 +46,4 @@ def insert(execution_id, execution_date, feature, test_name, outcome):
         conn.close()
     except (Exception, psycopg2.DatabaseError) as error:
         raise error
-
-
-
+    

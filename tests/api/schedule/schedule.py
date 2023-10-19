@@ -35,7 +35,6 @@ class TestScheduleApi:
         # Delete the schedule to avoid unnecessary data
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_02_get_schedule_by_group_id(self, auth):
         schedule = ScheduleApi()
         group = GroupsApi()
@@ -60,7 +59,6 @@ class TestScheduleApi:
         # Delete the schedule to avoid unnecessary data
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_03_get_schedule_by_id(self, auth):
         schedule = ScheduleApi()
         group = GroupsApi()
@@ -84,7 +82,6 @@ class TestScheduleApi:
 
         # Delete the schedule to avoid unnecessary data
         schedule.delete_schedule(auth, 200, schedule_id)
-
 
     def test_04_update_schedule(self, auth):
         schedule = ScheduleApi()
@@ -111,7 +108,6 @@ class TestScheduleApi:
         # Delete the schedule to avoid unnecessary data
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_05_delete_schedule(self, auth):
         schedule = ScheduleApi()
         group = GroupsApi()
@@ -127,7 +123,3 @@ class TestScheduleApi:
 
         # Delete the schedule to avoid unnecessary data
         schedule.delete_schedule(auth, 200, schedule_id)
-
-
-
-

@@ -98,7 +98,6 @@ class TestCreateStudent:
 
         student_api.delete_student_user(auth, 200, cedula_id)
 
-
     def test_04_search_student(self, auth):
         wait = WebDriverWait(self.driver, 10)
         login_page = LoginPage(self.driver)
@@ -121,4 +120,3 @@ class TestCreateStudent:
             (By.XPATH, "(//td[contains(@class, 'cdk-column-student') and text() = 'Student Automated Upre'])[1]")))
 
         student_api.delete_student_user(auth, 200, cedula_id)
-        

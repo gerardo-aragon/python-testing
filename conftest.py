@@ -69,7 +69,6 @@ def pytest_sessionfinish(session, exitstatus):
         json.dump(results, f, ensure_ascii=False)
     
 
-
 def pytest_unconfigure(config):
     """
     called before test process is exited.
@@ -86,7 +85,6 @@ def pytest_addoption(parser):
     """
     parser.addoption('--env', action='store', help="Execution environment")
     parser.addoption('--password', action='store', default="Test123@", help="Password auth")
-
 
 
 def pytest_json_modifyreport(json_report):

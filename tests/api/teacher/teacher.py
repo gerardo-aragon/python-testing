@@ -19,8 +19,8 @@ class TestTeacherApi:
 
         # Create teacher
         cedula_id, email, user_name = create_parametrize_data()
-        response_data = teacher.post_create_teacher(auth, 201, cedula_id, "user_teacher_"+email,
-                                                    "user_teacher_"+user_name)
+        response_data = teacher.post_create_teacher(auth, 201, cedula_id, "user_teacher_" + email,
+                                                    "user_teacher_" + user_name)
 
         # verify if cedulaId is present
         dictionary = response_data['created'][0]
@@ -46,7 +46,6 @@ class TestTeacherApi:
         # Delete the teacher to avoid unnecessary data
         teacher.delete_teacher_user(auth, 200, cedula_id)
 
-
     def test_03_create_existing_teacher_user(self, auth):
         teacher = TeacherApi()
 
@@ -64,7 +63,6 @@ class TestTeacherApi:
         # Delete the teacher to avoid unnecessary data
         teacher.delete_teacher_user(auth, 200, cedula_id)
         teacher.delete_teacher_user(auth, 200, new_cedula_id)
-
 
     def test_04_create_existing_teacher_email(self, auth):
         teacher = TeacherApi()
@@ -84,7 +82,6 @@ class TestTeacherApi:
         teacher.delete_teacher_user(auth, 200, cedula_id)
         teacher.delete_teacher_user(auth, 200, new_cedula_id)
 
-
     def test_05_get_all_teacher_users(self, auth):
         teacher = TeacherApi()
         # obtain all teacher users
@@ -94,7 +91,7 @@ class TestTeacherApi:
         teacher_rol = response_data['data'][0]['role']
 
         # check if the obtained rol is equal to TEACHER
-        check.equal(teacher_rol,"TEACHER")
+        check.equal(teacher_rol, "TEACHER")
 
         # check if cedulaId is present
         dictionary = response_data['data'][0]
@@ -116,7 +113,6 @@ class TestTeacherApi:
         # Verify if the response body contains ....
         check.is_true(is_key_present(dictionary, "email"))
         check.is_true(is_key_present(dictionary, "userName"))
-
 
     def test_07_edit_teacher_user_successful(self, auth):
         teacher = TeacherApi()
@@ -145,7 +141,6 @@ class TestTeacherApi:
 
         # Delete the teacher to avoid unnecessary data
         teacher.delete_teacher_user(auth, 200, cedula_id)
-
 
     def test_08_edit_teacher_existing_email(self, auth):
         teacher = TeacherApi()
@@ -210,8 +205,3 @@ class TestTeacherApi:
         deleted_id = dictionary['id']
         check.equal(deleted_id, int(cedula_id))
         check.is_true(is_key_present(dictionary, "id"))
-
-
-
-
-
