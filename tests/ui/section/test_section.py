@@ -29,7 +29,7 @@ class TestCreateStudent:
 
         # Login
         login_page.login("gerardo.aragon", "Test123@")
-        
+
         # Access section module
         menu.click_section_link()
         section_dashboard.click_create_section_button()
@@ -39,12 +39,11 @@ class TestCreateStudent:
         section_name = str("Section_" + random_name)
         section_create.create_section(section_name)
 
-        #Validate if section was created
+        # Validate if section was created
         section_dashboard.is_toast_present()
         wait.until(EC.presence_of_element_located(
             (By.XPATH, "//td[contains(@class, 'cdk-column-name') and text() = '" + section_name + "']")))
-        
-        
+
     def test_02_edit_section(self, auth):
         self.driver.get("http://localhost:4200/login")
 
@@ -101,7 +100,6 @@ class TestCreateStudent:
 
         # Validate if toast is present
         section_dashboard.is_toast_present()
-
 
     def test_04_search_section(self, auth):
         self.driver.get("http://localhost:4200/login")

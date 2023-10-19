@@ -14,6 +14,7 @@ from src.endpoints.teacher.teacher import *
 import pytest
 import psycopg2
 
+
 @pytest.mark.usefixtures('driver_init')
 @pytest.mark.usefixtures("auth")
 class TestCreateTeacher:
@@ -29,7 +30,7 @@ class TestCreateTeacher:
         teacher_api = TeacherApi()
 
         login_page.login("gerardo.aragon", "Test123@")
-        
+
         menu.click_teacher_link()
         teacher_dashboard.click_create_teacher_button()
 
@@ -37,7 +38,7 @@ class TestCreateTeacher:
         user_name = str("user_admin_" + user_id)
 
         create_teacher.create_user_teacher(user_id, "Automated", "Teacher testing", "09/11/1992", "60606060",
-                                       user_name, "Test123@")
+                                           user_name, "Test123@")
 
         teacher_dashboard.is_toast_present()
         wait.until(EC.presence_of_element_located(
@@ -46,7 +47,6 @@ class TestCreateTeacher:
         teacher_api.delete_teacher_user(auth, 200, user_id)
 
     def test_02_edit_teacher(self, auth):
-        
         wait = WebDriverWait(self.driver, 10)
         login_page = LoginPage(self.driver)
         teacher_dashboard = TeacherDashboard(self.driver)
@@ -73,7 +73,6 @@ class TestCreateTeacher:
         teacher_dashboard.is_toast_present()
 
         teacher_api.delete_teacher_user(auth, 200, cedula_id)
-    
 
     def test_03_delete_teacher(self, auth):
         teacher_api = TeacherApi()
@@ -99,7 +98,6 @@ class TestCreateTeacher:
         teacher_dashboard.delete_teacher_button_click()
 
         teacher_dashboard.is_toast_present()
-
 
     def test_04_search_teacher(self, auth):
         teacher_api = TeacherApi()

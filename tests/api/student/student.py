@@ -28,14 +28,13 @@ class TestStudentApi:
         # Delete the student to avoid unnecessary data
         student.delete_student_user(auth, 200, cedula_id)
 
-
     def test_02_create_existing_student_id(self, auth):
         student = StudentApi()
 
         # Create student
         cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
-        
+
         # Create student with existing cedula_id
         dictionary = student.post_create_student(auth, 201, cedula_id)
         error_message = dictionary['noCreated'][0]['error']
@@ -44,7 +43,6 @@ class TestStudentApi:
         # Delete the student to avoid unnecessary data
         student.delete_student_user(auth, 200, cedula_id)
         student.delete_student_user(auth, 200, dictionary['created'][0]['id'])
-
 
     def test_03_get_all_student_users(self, auth):
         student = StudentApi
@@ -57,14 +55,13 @@ class TestStudentApi:
         check.is_true(is_key_present(dictionary, "cedulaId"))
         check.is_true(is_key_present(dictionary, "student"))
 
-
     def test_04_get_specific_student(self, auth):
         student = StudentApi()
 
         # Create student
         cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
-        
+
         # Get specific student
         dictionary = student.get_specific_student_user(auth, 200, cedula_id)
 
@@ -76,14 +73,13 @@ class TestStudentApi:
         # Delete the student to avoid unnecessary data
         student.delete_student_user(auth, 200, cedula_id)
 
-
     def test_05_edit_student(self, auth):
         student = StudentApi()
 
         # Create student
         cedula_id = create_random_fields()
         student.post_create_student(auth, 201, cedula_id)
-        
+
         # Edit student
         dictionary = student.put_edit_student(auth, 200, cedula_id)
 
@@ -96,7 +92,6 @@ class TestStudentApi:
         # Delete the student to avoid unnecessary data
         student.delete_student_user(auth, 200, cedula_id)
 
-
     def test_06_delete_student(self, auth):
         student = StudentApi()
 
@@ -106,11 +101,10 @@ class TestStudentApi:
 
         # Delete student
         dictionary = student.delete_student_user(auth, 200, cedula_id)
-        
+
         # Verify if the response body contains...
         check.is_true(is_key_present(dictionary, "id"))
         check.equal(int(cedula_id), int(dictionary["id"]))
-
 
     def test_07_get_student_report(self, auth):
         student = StudentApi()
@@ -126,12 +120,3 @@ class TestStudentApi:
         check.is_true(is_key_present(report_data, "absences"))
         check.is_true(is_key_present(report_data, "notes"))
         check.is_true(is_key_present(report_data, "faults"))
-
-        
-        
-        
-
-
-
-
-

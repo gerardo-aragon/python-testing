@@ -39,7 +39,6 @@ class TestCreateNotes:
         # Validate creation note
         alerts_dashboard.is_toast_present()
 
-
     def test_02_access_action_module(self, auth):
         self.driver.get("http://localhost:4200/login")
 
@@ -54,11 +53,10 @@ class TestCreateNotes:
 
         # Access alerts section
         menu.click_alerts_link()
-        
+
         # Access actions section
         alerts_dashboard.actions_icon_click()
         alerts_dashboard.is_register_present()
-    
 
     def test_03_search_alert(self, auth):
         self.driver.get("http://localhost:4200/login")
@@ -80,10 +78,10 @@ class TestCreateNotes:
 
         # Access alerts section
         menu.click_alerts_link()
-        
+
         # Search alert
         alerts_dashboard.search_alerts(full_name)
-        
+
         # Validate if the alert is present
         wait.until(EC.presence_of_element_located(
             (By.XPATH, "//td[contains(@class, 'cdk-column-students') and text() = '" + full_name + "']")))

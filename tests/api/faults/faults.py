@@ -20,7 +20,8 @@ class TestAlertsApi:
         group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
-        fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Tardy", schedule_id)
+        fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][0]['cedulaId'], "Tardy",
+                                               schedule_id)
 
         # Validate response body
         check.is_true(is_key_present(fault_data[0], "status"))
@@ -29,7 +30,6 @@ class TestAlertsApi:
 
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
-
 
     def test_02_create_fault_by_schedule_absence(self, auth):
         faults = FaultsApi()
@@ -38,7 +38,8 @@ class TestAlertsApi:
         group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
-        fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][1]['cedulaId'], "Absence", schedule_id)
+        fault_data = faults.post_create_faults(auth, 201, group_id, student_id['data'][1]['cedulaId'], "Absence",
+                                               schedule_id)
 
         # Validate response body
         check.is_true(is_key_present(fault_data[0], "status"))
@@ -48,7 +49,6 @@ class TestAlertsApi:
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_03_create_students_fault_tardy(self, auth):
         faults = FaultsApi()
         schedule = ScheduleApi()
@@ -56,7 +56,8 @@ class TestAlertsApi:
         group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
-        fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][2]['cedulaId'], "Tardy", schedule_id)
+        fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][2]['cedulaId'], "Tardy",
+                                                       schedule_id)
 
         # Validate response body
         check.is_true(is_key_present(fault_data[0], "status"))
@@ -66,7 +67,6 @@ class TestAlertsApi:
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_04_create_students_fault_absence(self, auth):
         faults = FaultsApi()
         schedule = ScheduleApi()
@@ -74,7 +74,8 @@ class TestAlertsApi:
         group_id, schedule_id, student_id = get_student_data(auth)
 
         # Create fault
-        fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][3]['cedulaId'], "Absence", schedule_id)
+        fault_data = faults.post_create_student_faults(auth, 201, group_id, student_id['data'][3]['cedulaId'],
+                                                       "Absence", schedule_id)
 
         # Validate response body
         check.is_true(is_key_present(fault_data[0], "status"))
@@ -84,14 +85,12 @@ class TestAlertsApi:
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_05_get_alerts_student_count(self, auth):
         faults = FaultsApi()
 
         # Get alerts student count
         count_data = faults.get_faults_student_count(auth, 200)
         check.is_true(is_key_present(count_data, "count"))
-
 
     def test_06_put_justify_fault(self, auth):
         faults = FaultsApi()
@@ -116,7 +115,6 @@ class TestAlertsApi:
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
 
-
     def test_07_get_students_faults(self, auth):
         faults = FaultsApi()
         schedule = ScheduleApi()
@@ -137,10 +135,3 @@ class TestAlertsApi:
 
         # Delete schedule
         schedule.delete_schedule(auth, 200, schedule_id)
-
-
-
-
-
-
-
