@@ -27,7 +27,6 @@ class TestGroupApi:
         # Delete the group to avoid unnecessary data
         group.delete_group(auth, 200, response_data['created'][0]['id'])
 
-
     def test_02_create_existing_group(self, auth):
         group = GroupsApi()
 
@@ -42,8 +41,7 @@ class TestGroupApi:
 
         # Delete the group to avoid unnecessary data
         group.delete_group(auth, 200, dictionary['created'][0]['id'])
-        
-        
+
     def test_03_get_all_groups(self, auth):
         group = GroupsApi()
 
@@ -62,8 +60,7 @@ class TestGroupApi:
 
         # Delete the group to avoid unnecessary data
         group.delete_group(auth, 200, response['created'][0]['id'])
-        
-        
+
     def test_04_get_groups_by_username_role(self, auth):
         group = GroupsApi()
 
@@ -75,7 +72,6 @@ class TestGroupApi:
         check.is_true(is_key_present(dictionary, "name"))
         check.is_true(is_key_present(dictionary, "managerId"))
 
-
     def test_05_get_group_class_by_username(self, auth):
         group = GroupsApi()
 
@@ -86,7 +82,6 @@ class TestGroupApi:
         dictionary = response_data[0]
         check.is_true(is_key_present(dictionary, "id"))
         check.is_true(is_key_present(dictionary, "name"))
-
 
     def test_06_get_students_by_groups(self, auth):
         group = GroupsApi()
@@ -103,7 +98,6 @@ class TestGroupApi:
         check.is_true(is_key_present(dictionary, "id"))
         check.is_true(is_key_present(dictionary, "tutor"))
 
-
     def test_07_get_faults_by_group(self, auth):
         group = GroupsApi()
 
@@ -119,9 +113,7 @@ class TestGroupApi:
         check.is_true(is_key_present(dictionary, "id"))
         check.is_true(is_key_present(dictionary, "justification"))
         check.is_true(is_key_present(dictionary, "status"))
-        check.equal(group_id,dictionary["groupId"])
-
-
+        check.equal(group_id, dictionary["groupId"])
 
     def test_08_get_group_by_id(self, auth):
         group = GroupsApi()
@@ -142,7 +134,6 @@ class TestGroupApi:
         # Delete the group to avoid unnecessary data
         group.delete_group(auth, 200, group_id)
 
-
     def test_09_edit_group(self, auth):
         group = GroupsApi()
 
@@ -157,12 +148,11 @@ class TestGroupApi:
 
         # Validate if the response has .....
         payload = set_edit_group_payload(new_group_name)
-        check.equal(new_group_name,group_data["name"])
+        check.equal(new_group_name, group_data["name"])
         check.equal(payload["managerId"], group_data["managerId"])
 
         # Delete the group to avoid unnecessary data
         group.delete_group(auth, 200, group_id)
-
 
     def test_10_delete_group(self, auth):
         group = GroupsApi()
@@ -178,10 +168,3 @@ class TestGroupApi:
         # Verify if the response body contains...
         check.is_true(is_key_present(response_data, "id"))
         check.equal(int(group_id), int(response_data["id"]))
-
-
-
-
-
-
-
